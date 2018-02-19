@@ -1,0 +1,50 @@
+SetEnv REGISTER_GLOBALS 0
+SetEnv ZEND_OPTIMIZER 1
+SetEnv MAGIC_QUOTES 0
+ServerSignature Off
+AddDefaultCharset utf-8
+
+Options +FollowSymlinks
+Options -Indexes
+RewriteEngine On
+
+# Set REQUEST_SCHEME (standard environment variable in Apache 2.4)
+RewriteCond %{HTTPS} off
+RewriteRule .* - [E=REQUEST_SCHEME:http]
+
+RewriteCond %{HTTPS} on
+RewriteRule .* - [E=REQUEST_SCHEME:https]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+RewriteRule ^pokemon/(.+)$		index.php?page=pokemon&id=$1		[QSA,NC,L]
+RewriteRule ^pokestops$			index.php?page=pokestops		[QSA,NC,L]
+RewriteRule ^gym$			index.php?page=gym			[QSA,NC,L]
+RewriteRule ^devlog$			index.php?page=devlog			[QSA,NC,L]
+RewriteRule ^faq$			index.php?page=faq			[QSA,NC,L]
+RewriteRule ^trainer$			index.php?page=trainer			[QSA,NC,L]
+RewriteRule ^dashboard$			index.php?page=dashboard		[QSA,NC,L]
+RewriteRule ^pokemon/$			index.php?page=pokedex			[QSA,NC,L]
+RewriteRule ^pokemon$			index.php?page=pokedex			[QSA,NC,L]
+RewriteRule ^nests$			index.php?page=nests			[QSA,NC,L]
+RewriteRule ^raids$			index.php?page=raids			[QSA,NC,L]
+RewriteRule ^gymhistory$		index.php?page=gymhistory		[QSA,NC,L]
+
+# Cache static files for one month
+<ifModule mod_headers.c>
+	<FilesMatch "\.(ico|jpg|jpeg|png|gif|js|css)$">
+		Header set Cache-Control "max-age=2628000, public"
+	</FilesMatch>
+</IfModule>
+
+# Rules for Versioned Static Files
+RewriteRule ^core/(css|js)/(.+)\.(\d{10})\.(css|js)$ core/$1/$2.$4 [NC,L]
+
+# Enable compression for large content
+<IfModule mod_deflate.c>
+	<IfModule mod_filter.c>
+		AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/x-javascript application/javascript application/json
+	</IfModule>
+</IfModule>

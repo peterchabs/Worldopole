@@ -9,13 +9,13 @@
 # EDIT ME PLEASE
 
 // mysql db name
-define('SYS_DB_NAME', '#SYS_DB_NAME#');
+define('SYS_DB_NAME', 'mwp');
 // mysql username
-define('SYS_DB_USER', '#SYS_DB_USER#');
+define('SYS_DB_USER', 'root');
 // mysql password
-define('SYS_DB_PSWD', '#SYS_DB_PSWD#');
+define('SYS_DB_PSWD', 'Pjc&drk1337');
 // mysql server name
-define('SYS_DB_HOST', '#SYS_DB_HOST#');
+define('SYS_DB_HOST', '127.0.0.1');
 // mysql server port
 define('SYS_DB_PORT', 3306);
 
